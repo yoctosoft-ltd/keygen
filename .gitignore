@@ -1,0 +1,13 @@
+﻿# PyCharm files
+.idea/
+
+# The virtual environment
+venv*/
+
+# Python cache files
+__pycache__/
+
+# Distribution files
+build/
+dist/
+*.egg-info/
