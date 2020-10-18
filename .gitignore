@@ -11,3 +11,6 @@ __pycache__/
 build/
 dist/
 *.egg-info/
+
+# Project files
+*.pem

@@ -1,4 +1,4 @@
-#  key.py: Generate RSA keys.
+#  key.py: Generate keys and signatures.
 #  Copyright (c) 2020  Yoctosoft (PTY) Ltd. <info@yoctosoft.co.za>
 #
 #  This program is free software: you can redistribute it and/or modify
@@ -13,15 +13,15 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
-"""Generate RSA keys."""
+"""Generate keys and signatures."""
 
-import base64
+from base64 import b64encode
 
 import rsa
 
 
 def new_pair(public='public.pem', private='private.pem'):
-    """Make a new pair of keys."""
+    """Generate a new pair of keys."""
     pub, pvt = rsa.newkeys(512)
     with open(public, 'wb') as file:
         file.write(pub.save_pkcs1())
@@ -35,4 +35,4 @@ def signature(data, key='private.pem'):
         key = file.read()
     key = rsa.PrivateKey.load_pkcs1(key)
     signature_ = rsa.sign(data.encode(), key, 'SHA-1')
-    return base64.b64encode(signature_).decode()
+    return b64encode(signature_).decode()
