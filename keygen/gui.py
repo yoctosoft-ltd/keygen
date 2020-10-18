@@ -41,7 +41,11 @@ else:
 
 
 def browse_key(dialog):
-    """Set the private key for signing."""
+    """Set the path to the private key.
+
+    Args:
+        dialog: The Preferences dialog
+    """
     path = QFileDialog.getOpenFileName(
         dialog, dir=HOME, filter='RSA keys (*.pem)')[0]
     if path:
@@ -49,7 +53,11 @@ def browse_key(dialog):
 
 
 def browse_private(dialog):
-    """Set the path for the new private key."""
+    """Set the path to the new private key.
+
+    Args:
+        dialog: The New Key Pair dialog
+    """
     path = QFileDialog.getSaveFileName(
         dialog, dir=f'{HOME}private.pem', filter='RSA keys (*.pem)')[0]
     if path:
@@ -59,7 +67,11 @@ def browse_private(dialog):
 
 
 def browse_public(dialog):
-    """Set the path for the new public key."""
+    """Set the path to the new public key.
+
+    Args:
+        dialog: The New Key Pair dialog
+    """
     path = QFileDialog.getSaveFileName(
         dialog, dir=f'{HOME}public.pem', filter='RSA keys (*.pem)')[0]
     if path:
@@ -69,14 +81,23 @@ def browse_public(dialog):
 
 
 def copy_signature(dialog):
-    """Copy the signature to the clipboard."""
+    """Copy the signature to the clipboard.
+
+    Args:
+        dialog: The Signature dialog
+    """
     clipboard = QGuiApplication.clipboard()
     signature = dialog.label_signature.text()
     clipboard.setText(signature)
 
 
 def new_pair(ui_loader, window):
-    """Generate a new key pair."""
+    """Show the New Key Pair dialog.
+
+    Args:
+        ui_loader: The UI loader
+        window: The main window
+    """
     dialog = ui_loader.load(f'{UI}new_pair.ui', window)
     dialog.button_public.clicked.connect(lambda: browse_public(dialog))
     dialog.button_private.clicked.connect(lambda: browse_private(dialog))
@@ -85,7 +106,12 @@ def new_pair(ui_loader, window):
 
 
 def show_about(ui_loader, window):
-    """Show the About dialog."""
+    """Show the About dialog.
+
+    Args:
+        ui_loader: The UI loader
+        window: The main window
+    """
     dialog = ui_loader.load(f'{UI}about.ui', window)
     dialog.label_logo.setPixmap(QPixmap(f'{DATA}logo.png'))
     dialog.label_version.setText(keygen.__version__)
@@ -95,7 +121,12 @@ def show_about(ui_loader, window):
 
 
 def show_preferences(ui_loader, window):
-    """Show the Preferences dialog."""
+    """Show the Preferences dialog.
+
+    Args:
+        ui_loader: The UI loader
+        window: The main window
+    """
     dialog = ui_loader.load(f'{UI}preferences.ui', window)
     dialog.line_key.setText(ui_loader.config['key'])
     dialog.button_browse.clicked.connect(lambda: browse_key(dialog))
@@ -106,7 +137,12 @@ def show_preferences(ui_loader, window):
 
 
 def show_signature(ui_loader, window):
-    """Sign the email address."""
+    """Show the Signature dialog.
+
+    Args:
+        ui_loader: The UI loader
+        window: The main window
+    """
     data = window.line_email.text()
     signature = key.signature(data, ui_loader.config['key'])
     dialog = ui_loader.load(f'{UI}signature.ui', window)

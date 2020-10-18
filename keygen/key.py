@@ -21,7 +21,12 @@ import rsa
 
 
 def new_pair(public='public.pem', private='private.pem'):
-    """Generate a new pair of keys."""
+    """Generate a new pair of keys.
+
+    Args:
+        public (str): The path to the public key.
+        private (str): The path to the private key.
+    """
     pub, pvt = rsa.newkeys(512)
     with open(public, 'wb') as file:
         file.write(pub.save_pkcs1())
@@ -30,7 +35,15 @@ def new_pair(public='public.pem', private='private.pem'):
 
 
 def signature(data, key='private.pem'):
-    """Return the signature."""
+    """Return the signature.
+
+    Args:
+        data (str): The data to sign.
+        key (str): The path to the private key.
+
+    Returns:
+        str: The signature
+    """
     with open(key, 'rb') as file:
         key = file.read()
     key = rsa.PrivateKey.load_pkcs1(key)
