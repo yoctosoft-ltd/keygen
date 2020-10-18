@@ -4,11 +4,23 @@ Generate keys and signatures.
 
 ### Installation
 
+From the [Python Package Index](https://pypi.org/project/keygen-yocto/):
+
+    pip install keygen-yocto
+
+or from the source:
+
     ./setup.py install
 
 ### Usage
 
     keygen
+
+This app comes with a default key pair, but we recommend that you
+generate a new key pair to generate your signatures for your app.
+
+You will ship the public key with your app and keep the private key to
+generate signatures for your app.
 
 ### License
 

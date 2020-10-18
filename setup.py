@@ -28,34 +28,32 @@ def readme():
         return file.read()
 
 
-if __name__ == '__main__':
-    setup(
-        name='Key Generator',
-        version=keygen.__version__,
-        packages=['keygen'],
-        url='https://www.yoctosoft.co.za',
-        license='GNU General Public License (GPL)',
-        author='Yoctosoft',
-        author_email='info@yoctosoft.co.za',
-        description=keygen.__doc__,
-        long_description=readme(),
-        long_description_content_type='text/markdown',
-        classifiers=[
-            'Development Status :: 5 - Production/Stable',
-            'Environment :: MacOS X',
-            'Environment :: Win32 (MS Windows)',
-            'Environment :: X11 Applications',
-            'Intended Audience :: Customer Service',
-            'Intended Audience :: Developers',
-            'License :: OSI Approved :: GNU General Public License (GPL)',
-            'Natural Language :: English',
-            'Operating System :: MacOS :: MacOS X',
-            'Operating System :: Microsoft :: Windows :: Windows 10',
-            'Operating System :: POSIX :: Linux',
-            'Programming Language :: Python :: 3.8',
-            'Topic :: Security',
-            'Topic :: Utilities'],
-        keywords='key generator',
-        install_requires=['rsa', 'PySide2'],
-        python_requires='>=3.8',
-        entry_points={'gui_scripts': ['keygen = keygen.gui:main']})
+setup(
+    name='keygen-yocto', version=keygen.__version__, packages=['keygen'],
+    url='https://github.com/yoctosoft-ltd/keygen',
+    license='GNU General Public License (GPL)', author='Yoctosoft',
+    author_email='info@yoctosoft.co.za', description=keygen.__doc__,
+    long_description=readme(), long_description_content_type='text/markdown',
+    classifiers=[
+        'Development Status :: 5 - Production/Stable',
+        'Environment :: MacOS X',
+        'Environment :: Win32 (MS Windows)',
+        'Environment :: X11 Applications :: Qt',
+        'Intended Audience :: Customer Service',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: GNU General Public License (GPL)',
+        'Natural Language :: English',
+        'Operating System :: MacOS',
+        'Operating System :: Microsoft :: Windows',
+        'Operating System :: POSIX',
+        'Programming Language :: Python :: 3.8',
+        'Topic :: Security',
+        'Topic :: Utilities'],
+    keywords='key generator', install_requires=['rsa', 'PySide2'],
+    python_requires='>=3.8',
+    package_data={'keygen': [
+        'data/icon.png', 'data/logo.png', 'data/ui/about.ui',
+        'data/ui/main.ui', 'data/ui/new_pair.ui', 'data/ui/preferences.ui',
+        'data/ui/signature.ui']},
+    data_files=[('.', ['private.pem', 'public.pem'])],
+    entry_points={'gui_scripts': ['keygen = keygen.gui:main']})
