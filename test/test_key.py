@@ -25,23 +25,23 @@ from keygen import key
 
 
 class NewPair(unittest.TestCase):
-    """Make a new pair of keys."""
+    """Generate a new pair of keys."""
 
     def setUp(self):
-        """Make a new pair of keys."""
+        """Generate a new pair of keys."""
         key.new_pair('test_public.pem', 'test_private.pem')
 
     def tearDown(self):
-        """Delete the keys."""
+        """Delete the test keys."""
         os.remove('test_public.pem')
         os.remove('test_private.pem')
 
     def test_private(self):
-        """Test making the private key."""
+        """Test generating the private key."""
         self.assertTrue(os.path.exists('test_private.pem'))
 
     def test_public(self):
-        """Test making the public key."""
+        """Test generating the public key."""
         self.assertTrue(os.path.exists('test_public.pem'))
 
 
