@@ -6,15 +6,15 @@ Generate keys and signatures.
 
 From the [Python Package Index](https://pypi.org/project/keygen-yocto/):
 
-    pip install keygen-yocto
+    $ pip install keygen-yocto
     
 or from the source:
 
-    ./setup.py install
+    $ python setup.py install
 
 ### Usage
 
-    keygen
+    $ keygen
     
 This app comes with a default key pair, but we recommend that you 
 generate a new key pair to generate your signatures for your app.
