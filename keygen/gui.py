@@ -13,7 +13,12 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
-"""The GUI."""
+"""The GUI.
+
+Todo:
+    * Verify license keys.
+    * Show a list of license keys that was generated.
+"""
 
 import json
 import os
@@ -31,12 +36,11 @@ from keygen import keys
 
 DATA = pkg_resources.resource_filename(__name__, 'data/')
 HOME = os.path.expanduser('~/')
+CONFIG = (
+    f'{os.environ["APPDATA"]}/keygen.json' if sys.platform == 'win32'
+    else f'{HOME}.config/keygen.json')
 IMAGES = f'{DATA}images/'
 UI = f'{DATA}ui/'
-if sys.platform == 'win32':
-    CONFIG = f'{os.environ["APPDATA"]}/keygen.json'
-else:
-    CONFIG = f'{HOME}.config/keygen.json'
 
 
 def about(ui_loader, window):

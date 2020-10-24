@@ -31,7 +31,7 @@ class Metadata(unittest.TestCase):
 
     def test_version(self):
         """Test the version of the app."""
-        self.assertEqual('2.0', keygen.__version__)
+        self.assertEqual('2.0.0', keygen.__version__)
 
 
 if __name__ == '__main__':
