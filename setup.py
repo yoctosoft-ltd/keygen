@@ -1,4 +1,4 @@
-#! python
+#! /usr/bin/env python
 
 #  setup.py: Build/install the app.
 #  Copyright (c) 2020  Yoctosoft (PTY) Ltd. <info@yoctosoft.co.za>
@@ -17,23 +17,30 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """usage: setup.py build|install"""
 
-from setuptools import setup
+from setuptools import find_packages, setup
 
 import keygen
 
 
 def readme():
-    """Return the README file."""
+    """Load the README file.
+
+    Returns:
+        str: The README file.
+    """
     with open('README.txt') as file:
         return file.read()
 
 
 setup(
-    name='keygen-yocto', version=keygen.__version__, packages=['keygen'],
+    name='keygen-yocto',
+    version=keygen.__version__,
+    description=keygen.__doc__,
+    long_description=readme(),
+    long_description_content_type='text/markdown',
     url='https://github.com/yoctosoft-ltd/keygen',
-    license='GNU General Public License (GPL)', author='Yoctosoft',
-    author_email='info@yoctosoft.co.za', description=keygen.__doc__,
-    long_description=readme(), long_description_content_type='text/markdown',
+    author='Yoctosoft',
+    author_email='info@yoctosoft.co.za',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: MacOS X',
@@ -49,11 +56,9 @@ setup(
         'Programming Language :: Python :: 3.8',
         'Topic :: Security',
         'Topic :: Utilities'],
-    keywords='key generator', install_requires=['rsa', 'PySide2'],
+    keywords='license key generator',
+    packages=find_packages(),
+    install_requires=['PySide2', 'rsa'],
     python_requires='>=3.8',
-    package_data={'keygen': [
-        'data/icon.png', 'data/logo.png', 'data/ui/about.ui',
-        'data/ui/main.ui', 'data/ui/new_pair.ui', 'data/ui/preferences.ui',
-        'data/ui/signature.ui']},
-    data_files=[('.', ['private.pem', 'public.pem'])],
+    package_data={'keygen': ['data/*', 'data/images/*', 'data/ui/*']},
     entry_points={'gui_scripts': ['keygen = keygen.gui:main']})

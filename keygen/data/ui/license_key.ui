@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Signature</string>
+   <string>License Key</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="3" column="2">
@@ -52,22 +52,22 @@
      <property name="sizeHint" stdset="0">
       <size>
        <width>488</width>
-       <height>18</height>
+       <height>12</height>
       </size>
      </property>
     </spacer>
    </item>
    <item row="1" column="0" colspan="4">
-    <widget class="QLabel" name="label_signature">
+    <widget class="QLabel" name="label_license">
      <property name="text">
-      <string>label_signature</string>
+      <string>label_license</string>
      </property>
     </widget>
    </item>
    <item row="0" column="0" colspan="4">
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>Signature:</string>
+      <string>License key:</string>
      </property>
     </widget>
    </item>

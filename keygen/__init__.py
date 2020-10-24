@@ -1,4 +1,4 @@
-#  __init__.py: Key Generator
+#  __init__.py: Generate license keys for your app.
 #  Copyright (c) 2020  Yoctosoft (PTY) Ltd.
 #
 #  This program is free software: you can redistribute it and/or modify
@@ -13,7 +13,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
-"""Generate keys and signatures."""
+"""Generate license keys for your app."""
 
 __author__ = 'Yoctosoft <info@yoctosoft.co.za>'
-__version__ = '1.0'
+__version__ = '2.0'

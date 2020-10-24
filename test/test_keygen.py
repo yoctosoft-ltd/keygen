@@ -1,6 +1,6 @@
-#! python
+#! /usr/bin/env python
 
-#  test_keygen.py: Test the keygen package.
+#  test_keygen.py: Test keygen.
 #  Copyright (c) 2020  Yoctosoft (PTY) Ltd. <info@yoctosoft.co.za>
 #
 #  This program is free software: you can redistribute it and/or modify
@@ -23,15 +23,15 @@ import keygen
 
 
 class Metadata(unittest.TestCase):
-    """Test the metadata of the package."""
+    """Test the metadata of the app."""
 
     def test_author(self):
-        """Test the author of the package."""
+        """Test the author of the app."""
         self.assertEqual('Yoctosoft <info@yoctosoft.co.za>', keygen.__author__)
 
     def test_version(self):
-        """Test the version of the package."""
-        self.assertEqual('1.0', keygen.__version__)
+        """Test the version of the app."""
+        self.assertEqual('2.0', keygen.__version__)
 
 
 if __name__ == '__main__':

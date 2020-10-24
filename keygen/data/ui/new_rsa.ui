@@ -7,17 +7,17 @@
     <x>0</x>
     <y>0</y>
     <width>409</width>
-    <height>185</height>
+    <height>176</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>New Key Pair</string>
+   <string>New RSA Keys</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>Public key:</string>
+      <string>Public RSA key:</string>
      </property>
     </widget>
    </item>
@@ -33,7 +33,7 @@
       </size>
      </property>
      <property name="text">
-      <string>public.pem</string>
+      <string/>
      </property>
     </widget>
    </item>
@@ -47,7 +47,7 @@
    <item row="2" column="0">
     <widget class="QLabel" name="label_2">
      <property name="text">
-      <string>Private key:</string>
+      <string>Private RSA key:</string>
      </property>
     </widget>
    </item>
@@ -57,7 +57,7 @@
       <bool>false</bool>
      </property>
      <property name="text">
-      <string>private.pem</string>
+      <string/>
      </property>
     </widget>
    </item>
@@ -74,7 +74,7 @@
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Save</set>
      </property>
     </widget>
    </item>
@@ -89,7 +89,7 @@
      <property name="sizeHint" stdset="0">
       <size>
        <width>388</width>
-       <height>18</height>
+       <height>12</height>
       </size>
      </property>
     </spacer>
