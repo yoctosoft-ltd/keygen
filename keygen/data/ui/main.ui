@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>318</width>
-    <height>124</height>
+    <width>409</width>
+    <height>180</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="0" colspan="2">
+    <item row="3" column="0" colspan="4">
      <widget class="QLineEdit" name="line_email">
       <property name="minimumSize">
        <size>
@@ -29,27 +29,27 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="1">
-     <widget class="QPushButton" name="button_sign">
+    <item row="1" column="3">
+     <widget class="QPushButton" name="button_private">
+      <property name="text">
+       <string>Browse...</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="3">
+     <widget class="QLineEdit" name="line_private">
       <property name="enabled">
        <bool>false</bool>
       </property>
-      <property name="text">
-       <string>Sign</string>
-      </property>
-      <property name="default">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="0" colspan="2">
-     <widget class="QLabel" name="label">
-      <property name="text">
-       <string>Email address:</string>
+      <property name="minimumSize">
+       <size>
+        <width>300</width>
+        <height>0</height>
+       </size>
       </property>
      </widget>
     </item>
-    <item row="2" column="0">
+    <item row="4" column="0" colspan="2">
      <spacer name="horizontalSpacer">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -62,6 +62,33 @@
       </property>
      </spacer>
     </item>
+    <item row="0" column="0" colspan="4">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>Private RSA key:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0" colspan="4">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Email address of the user:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="2" colspan="2">
+     <widget class="QPushButton" name="button_license">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string>Generate License Key</string>
+      </property>
+      <property name="default">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -69,17 +96,15 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>318</width>
+     <width>409</width>
      <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuKey">
     <property name="title">
-     <string>Key</string>
+     <string>Keys</string>
     </property>
     <addaction name="action_new_pair"/>
-    <addaction name="separator"/>
-    <addaction name="action_preferences"/>
     <addaction name="separator"/>
     <addaction name="action_quit"/>
    </widget>
@@ -94,7 +119,7 @@
   </widget>
   <action name="action_new_pair">
    <property name="text">
-    <string>New Pair</string>
+    <string>New RSA Keys...</string>
    </property>
    <property name="toolTip">
     <string>New Pair</string>
@@ -113,12 +138,13 @@
     <string>About</string>
    </property>
   </action>
-  <action name="action_preferences">
-   <property name="text">
-    <string>Preferences</string>
-   </property>
-  </action>
  </widget>
+ <tabstops>
+  <tabstop>line_email</tabstop>
+  <tabstop>button_license</tabstop>
+  <tabstop>line_private</tabstop>
+  <tabstop>button_private</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
@@ -140,7 +166,7 @@
   <connection>
    <sender>line_email</sender>
    <signal>returnPressed()</signal>
-   <receiver>button_sign</receiver>
+   <receiver>button_license</receiver>
    <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">

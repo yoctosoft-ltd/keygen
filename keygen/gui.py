@@ -1,6 +1,4 @@
-#! python
-
-#  gui.py: The GUI
+#  gui.py: The GUI.
 #  Copyright (c) 2020  Yoctosoft (PTY) Ltd. <info@yoctosoft.co.za>
 #
 #  This program is free software: you can redistribute it and/or modify
@@ -15,7 +13,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
-"""usage: gui.py"""
+"""The GUI."""
 
 import json
 import os
@@ -25,14 +23,15 @@ import sys
 
 from PySide2.QtGui import QGuiApplication, QIcon, QPixmap
 from PySide2.QtUiTools import QUiLoader
-from PySide2.QtWidgets import QApplication, QFileDialog
+from PySide2.QtWidgets import QApplication, QDialogButtonBox, QFileDialog
 
 import keygen
-from keygen import key
+from keygen import keys
 
 
 DATA = pkg_resources.resource_filename(__name__, 'data/')
 HOME = os.path.expanduser('~/')
+IMAGES = f'{DATA}images/'
 UI = f'{DATA}ui/'
 if sys.platform == 'win32':
     CONFIG = f'{os.environ["APPDATA"]}/keygen.json'
@@ -40,140 +39,163 @@ else:
     CONFIG = f'{HOME}.config/keygen.json'
 
 
-def browse_key(dialog):
-    """Set the path to the private key.
-
-    Args:
-        dialog: The Preferences dialog
-    """
-    path = QFileDialog.getOpenFileName(
-        dialog, dir=HOME, filter='RSA keys (*.pem)')[0]
-    if path:
-        dialog.line_key.setText(path)
-
-
-def browse_private(dialog):
-    """Set the path to the new private key.
-
-    Args:
-        dialog: The New Key Pair dialog
-    """
-    path = QFileDialog.getSaveFileName(
-        dialog, dir=f'{HOME}private.pem', filter='RSA keys (*.pem)')[0]
-    if path:
-        if not path.endswith('.pem'):
-            path += '.pem'
-        dialog.line_private.setText(path)
-
-
-def browse_public(dialog):
-    """Set the path to the new public key.
-
-    Args:
-        dialog: The New Key Pair dialog
-    """
-    path = QFileDialog.getSaveFileName(
-        dialog, dir=f'{HOME}public.pem', filter='RSA keys (*.pem)')[0]
-    if path:
-        if not path.endswith('.pem'):
-            path += '.pem'
-        dialog.line_public.setText(path)
-
-
-def copy_signature(dialog):
-    """Copy the signature to the clipboard.
-
-    Args:
-        dialog: The Signature dialog
-    """
-    clipboard = QGuiApplication.clipboard()
-    signature = dialog.label_signature.text()
-    clipboard.setText(signature)
-
-
-def new_pair(ui_loader, window):
-    """Show the New Key Pair dialog.
-
-    Args:
-        ui_loader: The UI loader
-        window: The main window
-    """
-    dialog = ui_loader.load(f'{UI}new_pair.ui', window)
-    dialog.button_public.clicked.connect(lambda: browse_public(dialog))
-    dialog.button_private.clicked.connect(lambda: browse_private(dialog))
-    if dialog.exec_():
-        key.new_pair(dialog.line_public.text(), dialog.line_private.text())
-
-
-def show_about(ui_loader, window):
+def about(ui_loader, window):
     """Show the About dialog.
 
     Args:
-        ui_loader: The UI loader
-        window: The main window
+        ui_loader: The UI loader.
+        window: The main window.
     """
     dialog = ui_loader.load(f'{UI}about.ui', window)
-    dialog.label_logo.setPixmap(QPixmap(f'{DATA}logo.png'))
+    dialog.label_logo.setPixmap(QPixmap(f'{IMAGES}logo.png'))
     dialog.label_version.setText(keygen.__version__)
     dialog.label_description.setText(keygen.__doc__)
-    dialog.label_copy.setOpenExternalLinks(True)
+    dialog.label_copyright.setOpenExternalLinks(True)
     dialog.exec_()
 
 
-def show_preferences(ui_loader, window):
-    """Show the Preferences dialog.
+def browse_private_open(window):
+    """Set the path to the private RSA key for generating license keys.
 
     Args:
-        ui_loader: The UI loader
-        window: The main window
+        window: The main window.
     """
-    dialog = ui_loader.load(f'{UI}preferences.ui', window)
-    dialog.line_key.setText(ui_loader.config['key'])
-    dialog.button_browse.clicked.connect(lambda: browse_key(dialog))
+    if path := QFileDialog.getOpenFileName(
+            window, dir=HOME, filter='RSA keys (*.pem)')[0]:
+        window.line_private.setText(path)
+        config = preferences()
+        config['private_key'] = path
+        save_preferences(config)
+
+
+def browse_private_save(dialog):
+    """Set the path to the new private RSA key.
+
+    Args:
+        dialog: The New Key Pair dialog.
+    """
+    if path := QFileDialog.getSaveFileName(
+            dialog, dir=f'{HOME}private.pem', filter='RSA keys (*.pem)')[0]:
+        if not path.endswith('.pem'):
+            path = ''.join([path, '.pem'])
+        dialog.line_private.setText(path)
+
+
+def browse_public_save(dialog):
+    """Set the path to the new public RSA key.
+
+    Args:
+        dialog: The New Key Pair dialog.
+    """
+    if path := QFileDialog.getSaveFileName(
+            dialog, dir=f'{HOME}public.pem', filter='RSA keys (*.pem)')[0]:
+        if not path.endswith('.pem'):
+            path = ''.join([path, '.pem'])
+        dialog.line_public.setText(path)
+
+
+def copy_license(dialog):
+    """Copy the license key to the clipboard.
+
+    Args:
+        dialog: The License Key dialog.
+    """
+    clipboard = QGuiApplication.clipboard()
+    clipboard.setText(dialog.label_license.text())
+
+
+def generate_license(ui_loader, window):
+    """Generate a license key.
+
+    Args:
+        ui_loader: The UI loader.
+        window: The main window.
+    """
+    dialog = ui_loader.load(f'{UI}license_key.ui', window)
+    license_key = keys.generate_license(
+        window.line_email.text(), window.line_private.text())
+    dialog.label_license.setText(license_key)
+    dialog.button_copy.clicked.connect(lambda: copy_license(dialog))
+    dialog.exec_()
+
+
+def new_rsa(ui_loader, window):
+    """Generate a new pair of RSA keys.
+
+    Args:
+        ui_loader: The UI loader.
+        window: The main window.
+    """
+    dialog = ui_loader.load(f'{UI}new_rsa.ui', window)
+    dialog.button_box.button(QDialogButtonBox.Save).setDisabled(True)
+    dialog.button_public.clicked.connect(lambda: browse_public_save(dialog))
+    dialog.button_private.clicked.connect(lambda: browse_private_save(dialog))
+    dialog.line_public.textChanged.connect(lambda: validate_new_pair(dialog))
+    dialog.line_private.textChanged.connect(lambda: validate_new_pair(dialog))
     if dialog.exec_():
-        ui_loader.config['key'] = dialog.line_key.text()
-        with open(CONFIG, 'w') as file:
-            json.dump(ui_loader.config, file)
+        keys.new_rsa(dialog.line_public.text(), dialog.line_private.text())
 
 
-def show_signature(ui_loader, window):
-    """Show the Signature dialog.
+def preferences():
+    """Load the preferences of the app.
+
+    Returns:
+        dict: The preferences of the app.
+    """
+    if os.path.exists(CONFIG):
+        with open(CONFIG) as file:
+            return json.load(file)
+    else:
+        return {'private_key': ''}
+
+
+def save_preferences(config):
+    """Save the preferences of the app.
 
     Args:
-        ui_loader: The UI loader
-        window: The main window
+        config (dict): The preferences of the app.
     """
-    data = window.line_email.text()
-    signature = key.signature(data, ui_loader.config['key'])
-    dialog = ui_loader.load(f'{UI}signature.ui', window)
-    dialog.label_signature.setText(signature)
-    dialog.button_copy.clicked.connect(lambda: copy_signature(dialog))
-    dialog.exec_()
+    with open(CONFIG, 'w') as file:
+        json.dump(config, file)
+
+
+def validate_main(window):
+    """Validate the input of the main window.
+
+    Args:
+        window: The main window.
+    """
+    window.button_license.setEnabled(
+        window.line_private.text() != '' and window.line_email.text() != '')
+
+
+def validate_new_pair(dialog):
+    """Validate the input of the New Pair dialog.
+
+    Args:
+        dialog: The New Pair dialog.
+    """
+    dialog.button_box.button(QDialogButtonBox.Save).setEnabled(
+        dialog.line_public.text() != '' and dialog.line_private.text() != '')
 
 
 def main():
     """Run the app."""
     app = QApplication([])
     ui_loader = QUiLoader()
-    if os.path.exists(CONFIG):
-        with open(CONFIG) as file:
-            ui_loader.config = json.load(file)
-    else:
-        ui_loader.config = {'key': 'private.pem'}
     window = ui_loader.load(f'{UI}main.ui', None)
-    window.setWindowIcon(QIcon(f'{DATA}icon.png'))
+    window.setWindowIcon(QIcon(f'{IMAGES}icon.png'))
+    private_key = preferences()['private_key']
+    if private_key and os.path.exists(private_key):
+        window.line_private.setText(private_key)
+    window.button_private.clicked.connect(
+        lambda: browse_private_open(window))
+    window.button_license.clicked.connect(
+        lambda: generate_license(ui_loader, window))
+    window.line_private.textChanged.connect(lambda: validate_main(window))
+    window.line_email.textChanged.connect(lambda: validate_main(window))
     window.action_new_pair.triggered.connect(
-        lambda: new_pair(ui_loader, window))
-    window.action_preferences.triggered.connect(
-        lambda: show_preferences(ui_loader, window))
-    window.action_about.triggered.connect(lambda: show_about(ui_loader, window))
-    window.button_sign.clicked.connect(
-        lambda: show_signature(ui_loader, window))
-    window.line_email.textChanged.connect(
-        lambda: window.button_sign.setEnabled(window.line_email.text() != ''))
+        lambda: new_rsa(ui_loader, window))
+    window.action_about.triggered.connect(lambda: about(ui_loader, window))
     window.show()
     app.exec_()
-
-
-if __name__ == '__main__':
-    main()
