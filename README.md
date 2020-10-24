@@ -1,75 +1,94 @@
 # Key Generator
 
-Generate license keys for your app.
+A simple tool to generate and verify license keys for your app.
+
+This app uses RSA signature verification to sign the email address of a user 
+with a private key, then verify the signature with an associated public key.
 
 ![The main window.](keygen/data/images/main.png)
 
-### Installation
+## Installation
 
 From the [Python Package Index](https://pypi.org/project/keygen-yocto/):
 
-    pip install keygen-yocto
+```bash
+pip install keygen-yocto
+```
     
 or from the source:
 
-    ./setup.py install
+```bash
+./setup.py install
+```
 
-### Usage
+### Requirements
 
-    keygen
+*   [Python](https://www.python.org/)
 
-This app uses RSA signature verification to sign the email address of a
-user with a private key, then verify the signature with an associated
-public key.
+## Usage
 
-1. Generate a new pair of RSA keys.
+```bash
+keygen
+```
 
-   ![The New RSA Keys dialog.](keygen/data/images/new_rsa.png)
+1.  Generate a new pair of RSA keys.
 
-2. When a user purchases a license, generate a license key and send it 
-   to the user.
-
-   ![The License Key dialog.](keygen/data/images/license_key.png)
-
-3. In your app, verify that the license key is valid.  
-
-       from keygen import keys
+    ![The New RSA Keys dialog.](keygen/data/images/new_rsa.png)
     
-       if keys.valid(email, license_key, public_key):
-           # The license key is valid.
-       else:
-           # The license key is invalid.
+    **Note:** You will only have to do this once.
 
-**Note:** You will have to ship the public RSA key along with your app, 
-and ship the private RSA key along with this app to your Sales and 
-Customer Service teams.
+2.  When a user purchases a license, generate a license key and send it to the 
+    user.
 
-### Support
+    ![The License Key dialog.](keygen/data/images/license_key.png)
+    
+    **Note:** Sales and Customer Service teams will only have to do this step.
+    You will have to ship the private RSA key with this app to them.
 
-Email info@yoctosoft.co.za for help.
+3.  In your app, verify that the license key is valid.  
 
-### Acknowledgements
+    ```python
+    from keygen import keys
+    
+    if keys.valid('email', 'license_key', 'public_key'):
+        pass    # The license key is valid.
+    else:
+        pass    # The license key is invalid.
+    ```
 
-This app is based on 
-[this article](https://build-system.fman.io/generating-license-keys) 
-by Michael Herrmann @mherrmann
+    **Note:** You will have to ship the public RSA key with your app.
 
-### What's new?
+## Support
 
-#### 2.0
+Email [info@yoctosoft.co.za](mailto:info@yoctosoft.co.za) for help.
 
-Complete new interface for Developers and Sales/Customer Server teams.
+## Roadmap
 
-#### 1.0
+1.  Verify license keys in the GUI.
+2.  Show a list of license keys that was generated.
 
-This was just to publish an app that does what it must do.
+## Contributing
 
-### License
+Pull requests are welcome.  For major changes, please open an issue first to 
+discuss what you would like to change.
 
-Copyright (c) 2020  Yoctosoft (PTY) Ltd. <info@yoctosoft.co.za>
+Please make sure to update tests as appropriate.
 
-This program comes with ABSOLUTELY NO WARRANTY.
-This is free software, and you are welcome to redistribute it under
-certain conditions.
-See the [GNU General Public License](https://www.gnu.org/licenses/) for
-more details.
+## Acknowledgements
+
+*   Based on 
+    [this article](https://build-system.fman.io/generating-license-keys).
+
+*   [Python-RSA](https://stuvel.eu/software/rsa/) for generating and verifying 
+    the keys.
+
+*   [Qt for Python](https://wiki.qt.io/Qt_for_Python) for the GUI.
+
+## License
+
+Copyright (c) 2020  Yoctosoft (PTY) Ltd. 
+[info@yoctosoft.co.za](mailto:info@yoctosoft.co.za)
+
+This program comes with ABSOLUTELY NO WARRANTY.  This is free software, and you 
+are welcome to redistribute it under certain conditions. See the 
+[GNU General Public License](https://www.gnu.org/licenses/) for more details.

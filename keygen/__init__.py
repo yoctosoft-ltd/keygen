@@ -13,7 +13,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
-"""Generate license keys for your app."""
+"""A simple tool to generate and verify license keys for your app."""
 
 __author__ = 'Yoctosoft <info@yoctosoft.co.za>'
-__version__ = '2.0'
+__version__ = '2.0.0'

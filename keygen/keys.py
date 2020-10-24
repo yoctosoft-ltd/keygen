@@ -13,18 +13,18 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
-"""Generate license keys for your app.
+"""A simple tool to generate and verify license keys for your app.
 
 This app uses RSA signature verification to sign the email address of a
 user with a private key, then verify the signature with an associated
 public key.
 
-First generate a new pair of RSA keys.
+First generate a new pair of RSA keys with ``new_rsa()``.
 
-When a user purchases a license, generate a license key and send it to
-the user.
+When a user purchases a license, generate a license key with
+``generate_license()`` and send it to the user.
 
-In your app, verify that the license key is valid.  You will have to
+In your app, verify the license key with ``valid()``.  You will have to
 ship the public RSA key with your app.
 """
 
@@ -67,7 +67,8 @@ def new_rsa(public_key, private_key):
 def valid(email, license_key, public_key):
     """Verify the license key.
 
-    Verify the signature (license key) with the public RSA key.
+    Verify the license key with the email address of the user and the
+    public RSA key.
 
     Args:
         email (str): The email address of the user.
