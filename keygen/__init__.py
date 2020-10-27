@@ -16,4 +16,4 @@
 """A simple tool to generate and verify license keys for your app."""
 
 __author__ = 'Yoctosoft <info@yoctosoft.co.za>'
-__version__ = '2.0.0'
+__version__ = '2.0.1'

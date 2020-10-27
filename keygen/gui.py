@@ -37,6 +37,9 @@ from keygen import keys
 DATA = pkg_resources.resource_filename(__name__, 'data/')
 HOME = os.path.expanduser('~/')
 CONFIG = (
+    f'{os.environ["APPDATA"]}/keygen2.json' if sys.platform == 'win32'
+    else f'{HOME}.config/keygen2.json')
+CONFIG_OLD = (
     f'{os.environ["APPDATA"]}/keygen.json' if sys.platform == 'win32'
     else f'{HOME}.config/keygen.json')
 IMAGES = f'{DATA}images/'
@@ -185,6 +188,8 @@ def validate_new_pair(dialog):
 
 def main():
     """Run the app."""
+    if os.path.exists(CONFIG_OLD):
+        os.remove(CONFIG_OLD)
     app = QApplication([])
     ui_loader = QUiLoader()
     window = ui_loader.load(f'{UI}main.ui', None)
