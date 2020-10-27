@@ -193,7 +193,7 @@ def main():
     app = QApplication([])
     ui_loader = QUiLoader()
     window = ui_loader.load(f'{UI}main.ui', None)
-    window.setWindowIcon(QIcon(f'{IMAGES}icon.png'))
+    window.setWindowIcon(QIcon(f'{IMAGES}icon.ico'))
     private_key = preferences()['private_key']
     if private_key and os.path.exists(private_key):
         window.line_private.setText(private_key)

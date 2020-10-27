@@ -5,7 +5,7 @@ A simple tool to generate and verify license keys for your app.
 This app uses RSA signature verification to sign the email address of a user
 with a private key, then verify the signature with an associated public key.
 
-![The main window.](keygen/data/images/main.png)
+![The main window.](images/main.png)
 
 ## Installation
 
@@ -31,21 +31,18 @@ or from the source:
 keygen
 ```
 
-1.  Generate a new pair of RSA keys.
+1.  Generate a new pair of RSA keys.  **You will only have to do this once.**
 
-    ![The New RSA Keys dialog.](keygen/data/images/new_rsa.png)
-
-    **Note:** You will only have to do this once.
+    ![The New RSA Keys dialog.](images/new_rsa.png)
 
 2.  When a user purchases a license, generate a license key and send it to the
-    user.
+    user.  **Sales teams will only have to do this step.**  (You will have to
+    ship the private RSA key to the sales team.)
 
-    ![The License Key dialog.](keygen/data/images/license_key.png)
+    ![The License Key dialog.](images/license_key.png)
 
-    **Note:** Sales and Customer Service teams will only have to do this step.
-    You will have to ship the private RSA key with this app to them.
-
-3.  In your app, verify that the license key is valid.
+3.  In your app, verify that the license key is valid.  (You will have to ship
+    the public RSA key with your app.)
 
     ```python
     from keygen import keys
@@ -55,8 +52,6 @@ keygen
     else:
         pass    # The license key is invalid.
     ```
-
-    **Note:** You will have to ship the public RSA key with your app.
 
 ## Support
 
@@ -76,7 +71,7 @@ Please make sure to update tests as appropriate.
 
 ## Acknowledgements
 
-*   Based on
+*   This app was inspired by
     [this article](https://build-system.fman.io/generating-license-keys).
 
 *   [Python-RSA](https://stuvel.eu/software/rsa/) for generating and verifying
